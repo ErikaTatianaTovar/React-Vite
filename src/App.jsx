@@ -4,21 +4,23 @@ import Family from './components/family'
 import Footer from './components/footer'
 import Header from './components/header'
 import UserList from './components/user/UserList'
+import UserForm from './components/user/UserForm'
+import Login from './components/auth/Login'
 
 function App() {
   return (
-    <>
-     
-      <BrowserRouter> 
-      <Header />
+    <>      
+      <BrowserRouter>
+        <Header />
         <Routes>
           <Route path="/" element={<Family />} />
           <Route path="/user" element={<UserList />} />
+          <Route path="/create-user" element={<UserForm />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
-        </BrowserRouter>
-        <Family />
-     </> 
-  )
+      </BrowserRouter>
+    </>
+  );
 }
 export default App

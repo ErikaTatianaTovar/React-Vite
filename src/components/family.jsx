@@ -56,7 +56,8 @@ export function family() {
   ];
 
   return (
-    <>
+
+    <div>
       <h1>💖MY FUTURE FAMILY👨‍👩‍👧‍👦</h1>
       <br />
       <br />
@@ -72,8 +73,7 @@ export function family() {
       <button onClick={() => setCount(count / 10)}>Dividir por 10</button>
       <button onClick={() => setCount(count - count)}>Reestablecer</button>
       <p> El contador va en: {count}</p>
-
-    </>
+    </div>
   )
 }
 export default family
