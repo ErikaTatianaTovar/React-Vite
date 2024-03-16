@@ -16,6 +16,7 @@ function App() {
           <Route path="/" element={<Family />} />
           <Route path="/user" element={<UserList />} />
           <Route path="/create-user" element={<UserForm />} />
+          <Route path="/user/:id" element={<UserForm />} />
           <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />

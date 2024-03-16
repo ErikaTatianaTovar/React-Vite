@@ -18,7 +18,7 @@ function Profile({ user }) {
     </>
   )
 }
-function ButtonExample(){
+function ButtonExample() {
 
   /** El setState se usa para cambiar estados de variables */
   // const [count, setCount] = useState(0);
@@ -30,24 +30,19 @@ function ButtonExample(){
 
 
   return (
-    <>
-      <button className="bg-blue-500 hover:bg-blue-700 rounded
-                         text-blue-50 font-bold py-2 px-4" 
-              onClick={() => dispatch(increment())}>Sumar</button>
-      <button className="bg-red-500 hover:bg-red-700 rounded
-                         text-red-50 font-bold py-2 px-4" 
-              onClick={() => dispatch(decrement())}>Restar</button>
-              <button className="bg-pink-500 hover:bg-pink-700 rounded
-                         text-pink-50 font-bold py-2 px-4" 
-              onClick={() => dispatch(multiply())}>Multiplicar por 2</button>
-              <button className="bg-purple-500 hover:bg-purple-700 rounded
-                         text-purple-50 font-bold py-2 px-4" 
-              onClick={() => dispatch(divide())}>Dividir por 2</button>
-              <button className="bg-gray-500 hover:bg-gray-700 rounded
-                         text-gray-50 font-bold py-2 px-4" 
-              onClick={() => dispatch(reset())}>Reestablecer</button>
+    <div className="flex space-x-4 px-10">
+      <button className="bg-blue-500 hover:bg-blue-700 rounded text-blue-50 py-2 px-4"
+        onClick={() => dispatch(increment())}>Sumar</button>
+      <button className="bg-red-500 hover:bg-red-700 rounded text-red-50  py-2 px-4"
+        onClick={() => dispatch(decrement())}>Restar</button>
+      <button className="bg-pink-500 hover:bg-pink-700 rounded text-pink-50 py-2 px-4"
+        onClick={() => dispatch(multiply())}>Multiplicar por 2</button>
+      <button className="bg-purple-500 hover:bg-purple-700 rounded text-purple-50 py-2 px-4"
+        onClick={() => dispatch(divide())}>Dividir por 2</button>
+      <button className="bg-gray-500 hover:bg-gray-700 rounded text-gray-50 py-2 px-4"
+        onClick={() => dispatch(reset())}>Reestablecer</button>
       <p> El contador va en: {number}</p>
-    </>
+    </div>
   );
 }
 export function family() {
@@ -87,22 +82,27 @@ export function family() {
   ];
 
   return (
-
     <div>
-      <h1>💖MY FUTURE FAMILY👨‍👩‍👧‍👦</h1>
+    <div className='flex flex-col justify-center items-center font-bold text-2xl'>
+      <h1 className=" font-comic-sans text-3xl"> 💖MY FUTURE FAMILY👨‍👩‍👧‍👦</h1>
       <br />
       <br />
       {users.map(user => (
         < Profile key={user.name} user={user} />
       ))}
+      </div>
       <br />
-      <input className="border border-black bg-white shadow-md rounded px-4 py-2 font-bold text-black flex margin-right px-100" type="text" onChange={mostrarTexto} onKeyUp={keyUp} />
-      <button className="bg-green-500 hover: bg-green-700 rounded text-green-50 font-bold py-2 px-4"onClick={() => saludar()}>Enviar</button>
+      <div className="flex space-x-4 px-10">
+      <input className="border border-black bg-white shadow-md rounded px-4 py-2 font-bold text-black flex margin-right px-100 " type="text" onChange={mostrarTexto} onKeyUp={keyUp} />
+      <button className="bg-green-500 hover: bg-green-700 rounded text-green-50 font-bold py-2 px-4" onClick={() => saludar()}>Enviar</button>
+      </div>
+      <button className='bg'></button><br />
+      <br />
+      <ButtonExample />
+      <br />
+      <ButtonExample />
       <br />
       <br />
-      <ButtonExample/>
-      <ButtonExample/>
-      <ButtonExample/>
     </div>
   )
 }
