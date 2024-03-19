@@ -1,9 +1,21 @@
-import { useSelector, useDispatch } from 'react-redux';
+//import { useSelector } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useGetUsersQuery } from '../../features/api/apiSlice';
 export default function UserList(){
 
-    const users = useSelector(state => state.users);
-    console.log(users)
+const {data: users, isLoading, isFetching} = useGetUsersQuery;
+console.log({data: users, isLoading, isFetching})
+
+    // Verificar si los datos están cargando
+  if (isLoading || isFetching) {
+    return <div>Loading...</div>;
+  }
+
+  // Verificar si los datos son undefined
+  if (!users || users.length === 0) {
+    return <div>No users found</div>;
+  }
 
     return (
         <div className="flex justify-center py-8 px-10">

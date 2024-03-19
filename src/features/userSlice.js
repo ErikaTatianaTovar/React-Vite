@@ -11,7 +11,7 @@ const users = [
         "avatar": "https://t4.ftcdn.net/jpg/01/30/67/81/360_F_130678149_Uae3GxvZy68fgahjK4eExlMQQW9CFiPa.jpg"
 }
 ]
-
+/**Metodo para usar el create slice de reduxtoolkit */
 export const userSlice = createSlice({
     name: 'users',
     initialState: users,

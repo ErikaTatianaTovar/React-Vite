@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+/*import { createSlice } from "@reduxjs/toolkit";
 //el state es el valor que se va a cambiar y el action es si ese valor llega de otro lado
 //es slice es una funcion donde se define como va a cambiar, como aumenta o disminuye
 
@@ -19,4 +19,4 @@ const numberSlice= createSlice({
 //exportar las dos funciones
 export const {increment,decrement, multiply, divide, reset} = numberSlice.actions;
 export default numberSlice.reducer;
-//para actualizar usuarios crear uno vacio y luego las funciones necesarias para actualizar los datos de un array
+//para actualizar usuarios crear uno vacio y luego las funciones necesarias para actualizar los datos de un array*/

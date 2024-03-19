@@ -1,13 +1,15 @@
-import { useDispatch } from "react-redux";
-import { addUser } from "../../features/userSlice";
+//import { useDispatch } from "react-redux";
+//import { addUser } from "../../features/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useCreateUserMutation } from "../../features/api/apiSlice";
 
 export default function UserForm() {
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+   // const dispatch = useDispatch();
+  //  const navigate = useNavigate();
     const params = useParams();
+    const [createUser] = useCreateUserMutation();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,9 +20,10 @@ export default function UserForm() {
             id: e.target.id.value,
             password: e.target.password.value
         }
-        dispatch(addUser(newUser))
+        createUser(newUser);
+       // dispatch(addUser(newUser))
 
-        navigate('/user')
+      //  navigate('/user')
     }
     useEffect(() => {
         console.log(params.id)
