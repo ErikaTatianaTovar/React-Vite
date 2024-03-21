@@ -1,4 +1,4 @@
-//import { decrement, increment, multiply, divide, reset } from '../features/numberSlice';
+import { decrement, increment, multiply, divide, reset } from '../features/numberSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 function Profile({ user }) {
@@ -18,15 +18,15 @@ function Profile({ user }) {
     </>
   )
 }
-//function ButtonExample() {
+function ButtonExample() {
 
   /** El setState se usa para cambiar estados de variables */
-  // const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   /** Obtiene el valor del estado de la variable */
-  /*const number = useSelector(state => state.number.value);
+  const number = useSelector(state => state.number.value);
   /** Cambiar el valor del estado de la variable */
-  /*const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
   return (
@@ -44,7 +44,7 @@ function Profile({ user }) {
       <p> El contador va en: {number}</p>
     </div>
   );
-}*/
+}
 export function family() {
   const saludar = () => {
     alert("hola John, te amo <3")
@@ -98,10 +98,11 @@ export function family() {
       </div>
       <button className='bg'></button><br />
       <br />
-      
+      ButtonExample
       <br />
-     
+      {/*<ButtonExample/>*/}
       <br />
+      {/*<ButtonExample/>*/}
       <br />
     </div>
   )

@@ -9,18 +9,24 @@ export const apiSlice = createApi({
             getUsers: builder.query({
                 query: () => `/user`,
                 providesTags:["Users"], // funcion que se ejecuta al hacer un llamado en conjunto con el 
-                transformResponse: (response) => 
-                response.sort((a, b) => b._id - a._id), //transforma y recoge
-            }),
+                transformResponse: response => response.sort((a, b) =>
+                (a.name[0].toUpperCase() < b.name.toUpperCase()) ? -1 
+                : (a.name[0].toUpperCase() > b.name.toUpperCase()) ? 1 : 0)
+                }),
+                getUserById: builder.query({
+                    query: (_id) => '/user/' + _id,
+                    providesTags:["Users"],
+                }),
             createUser:builder.mutation({
                 query:(newUser) => ({
                     url: `/user`,
                     method: 'POST',
                     body: newUser
-                })
+                }),
+                invalidatesTags:["Users"] // se ejecuta cuando hay un cambio en la BD
             })
         }),
     })
 //para exportar el nombre de la funcion se pone despues de use y antes de query y en camelcase, 
 //ejemplo la funcion holaMundo quedaria useHolaMundoQuery
-export const { useGetUsersQuery, useCreateUserMutation } = apiSlice
+export const { useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation } = apiSlice
