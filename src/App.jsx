@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
-import Family from './components/family'
-import Footer from './components/footer'
-import Header from './components/header'
-import UserList from './components/user/UserList'
-import UserForm from './components/user/UserForm'
-import Login from './components/auth/Login'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import Family from "./components/family";
+import Footer from "./components/footer";
+import Header from "./components/header";
+import UserList from "./components/user/UserList";
+import UserForm from "./components/user/UserForm";
+import Login from "./components/auth/Login";
 
 function App() {
   return (
-    <>      
+    <>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -24,4 +24,4 @@ function App() {
     </>
   );
 }
-export default App
+export default App;
