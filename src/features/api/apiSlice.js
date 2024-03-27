@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -68,6 +69,7 @@ export const apiSlice = createApi({
     }),
   }),
 });
+
 /** Segun la nomenclatura de la libreria se usa use al principio
  * y Query o Mutation al final segun corresponda */
 export const {

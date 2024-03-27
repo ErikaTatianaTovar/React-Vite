@@ -95,14 +95,6 @@ export default function UserForm({ props }) {
               </p>
             </div>
             <input
-              id="avatar"
-              name="avatar"
-              accept="image/png, image/jpeg"
-              type="file"
-              className="hidden"
-              onChange={onFileChange}
-            />
-            <input
               onChange={handleChangeAvatar}
               id="avatar"
               name="avatar"

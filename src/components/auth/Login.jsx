@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useLoginMutation } from "../../features/api/apiSlice";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../features/authSlice";
 
 export default function Login() {
   const [login] = useLoginMutation();
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,10 +19,13 @@ export default function Login() {
         email: e.target.email.value,
         password: e.target.password.value,
       };
+      console.log(user);
       const response = await login(user);
       if (response.error && response.error.data.status == "error") {
         setError(true);
       } else {
+        localStorage.setItem("sessionData", JSON.stringify(response.data));
+        dispatch(loginSuccess(response.data));
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -31,7 +37,7 @@ export default function Login() {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -56,9 +62,9 @@ export default function Login() {
             name="email"
             placeholder="Email"
             className="shadow appearance-none border rounded w-full focus:shadow-outline disabled:bg-slate-50 disabled:text-slate-500 
-                                                      disabled:border-slate-200 disabled:shadow-none
-                                                      invalid:border-pink-500 invalid:text-pink-600
-                                                      focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                                    disabled:border-slate-200 disabled:shadow-none
+                                    invalid:border-pink-500 invalid:text-pink-600
+                                    focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
           />
         </div>
         <div className="mb-4">
@@ -75,9 +81,9 @@ export default function Login() {
             name="password"
             placeholder="Password"
             className="shadow appearance-none border rounded w-full focus:shadow-outline 
-                                                      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                                                      invalid:border-pink-500 invalid:text-pink-600
-                                                      focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                                    disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+                                    invalid:border-pink-500 invalid:text-pink-600
+                                    focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
           />
         </div>
         <div className="flex justify-center">
@@ -85,7 +91,7 @@ export default function Login() {
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 rounded text-blue-50 font-bold py-2 px-4"
           >
-            Iniciar Sesion
+            Iniciar Sesión
           </button>
         </div>
       </form>
