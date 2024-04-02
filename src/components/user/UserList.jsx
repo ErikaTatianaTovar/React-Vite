@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import {
   useDeleteUserMutation,
   useGetUsersQuery,
-} from "../../features/api/apiSlice";
+} from "../../features/api/apiUsersSlice";
 import Swal from "sweetalert2";
 export default function UserList() {
   /** Obtiene el estado de una variable con Redux */

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const apiSlice = createApi({
-  reducerPath: "api",
+export const apiUsersSlice = createApi({
+  reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000",
     prepareHeaders: (headers, { getState }) => {
@@ -80,4 +80,4 @@ export const {
   useDeleteUserMutation,
   useUploadAvatarMutation,
   useLoginMutation,
-} = apiSlice;
+} = apiUsersSlice;

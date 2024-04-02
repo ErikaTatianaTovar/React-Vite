@@ -137,11 +137,7 @@ export function family() {
       <button className="bg"></button>
       <br />
       <br />
-      ButtonExample
-      <br />
-      {/*<ButtonExample/>*/}
-      <br />
-      {/*<ButtonExample/>*/}
+      {/*<ButtonExample />*/}
       <br />
     </div>
   );

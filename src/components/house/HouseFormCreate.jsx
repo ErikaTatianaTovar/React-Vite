@@ -1,18 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import {
-  useCreateUserMutation,
-  useUploadAvatarMutation,
-} from "../../features/api/apiUsersSlice";
+  useCreateHouseMutation,
+  useUploadAvatarHouseMutation,
+} from "../../features/api/apiHousesSlice";
 import Swal from "sweetalert2";
-import UserForm from "./UserForm";
 import { useState } from "react";
+import HouseForm from "./HouseForm";
 
-export default function UserFormCreate() {
+export default function HouseFormCreate() {
   const navigate = useNavigate(); // Instanciamos la vaiable de useNavigate
-  const [createUser] = useCreateUserMutation();
+  const [createHouse] = useCreateHouseMutation();
 
   const [file, setFile] = useState(null);
-  const [uploadAvatar] = useUploadAvatarMutation();
+  const [uploadAvatar] = useUploadAvatarHouseMutation();
 
   const handleChangeAvatar = (e) => {
     setFile(e.target.files);
@@ -20,21 +20,27 @@ export default function UserFormCreate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newUser = {
-      name: e.target.name.value,
-      lastname: e.target.lastname.value,
-      email: e.target.email.value,
-      id: e.target.id.value,
-      password: e.target.password.value,
+    const newHouse = {
+      type: e.target.type.value,
+      department: e.target.department.value.split("-")[1],
+      city: e.target.city.value,
+      address: e.target.address.value,
+      zip_code: e.target.zip_code.value,
+      price: e.target.price.value,
+      size: e.target.size.value,
+      rooms: e.target.rooms.value,
+      bathrooms: e.target.bathrooms.value,
+      parking: e.target.parking.value
     };
+    console.log(newHouse)
     try {
-      const response = await createUser(newUser);
+      const response = await createHouse(newHouse);
       if (response.data.status == "error") {
         Swal.fire({
           position: "top-end",
           icon: "error",
           title:
-            "El usuario no pudo ser registrado, por favor verifique los datos",
+            "La vivienda no pudo ser registrada, por favor verifique los datos",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -47,11 +53,11 @@ export default function UserFormCreate() {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Usuario Creado Correctamente",
+          title: "Vivienda Creada Correctamente",
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          navigate("/user"); // Hacemos la redireccion
+          navigate("/house"); // Hacemos la redireccion
         });
       }
     } catch (error) {
@@ -60,11 +66,11 @@ export default function UserFormCreate() {
   };
 
   return (
-    <UserForm
+    <HouseForm
       props={{
         handleSubmit: handleSubmit,
         handleChangeAvatar: handleChangeAvatar,
-        user: null,
+        house: null,
       }}
     />
   );

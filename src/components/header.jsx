@@ -36,6 +36,11 @@ export default function Header() {
                 Usuarios
               </Link>
             </li>
+            <li>
+              <Link to="/house" className="hover:text-blue-500">
+                Casas
+              </Link>
+            </li>
           </>
         )}
         <li>
@@ -43,7 +48,14 @@ export default function Header() {
             Crear Usuario
           </Link>
         </li>
+        <li>
+              <Link to="/create-house" className="hover:text-blue-500">
+                Crear Casa
+              </Link>
+            </li>
+
       </ul>
+      {/* DropDown Usuario Logueado */}
       <div className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 px-5">
         {isAuthenticated ? (
           <>
@@ -60,13 +72,19 @@ export default function Header() {
                   </p>
                   <Link
                     to={`/user/${user._id}`}
-                    className="block px-4 py-2 text-sm text-gray-700"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Profile
                   </Link>
+                  <Link
+                    to={`/change-password`}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Change Password
+                  </Link>
                   <a
                     onClick={handleLogout}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   >
                     Logout
                   </a>

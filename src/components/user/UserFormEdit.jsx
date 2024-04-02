@@ -3,7 +3,7 @@ import {
   useGetUserByIdQuery,
   useUpdateUserMutation,
   useUploadAvatarMutation,
-} from "../../features/api/apiSlice";
+} from "../../features/api/apiUsersSlice";
 import Swal from "sweetalert2";
 import UserForm from "./UserForm";
 import { useState } from "react";
