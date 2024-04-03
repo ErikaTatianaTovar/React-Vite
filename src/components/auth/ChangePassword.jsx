@@ -62,7 +62,7 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="max-w-lg w-full mx-auto px-5 py-5">
+    <div className="max-w-md w-full mx-auto mt-10 mb-10 bg-white">
       <form
         onSubmit={handleSubmit}
         className=" shadow-md rounded pt-6 pb-10 mb-4 px-10"

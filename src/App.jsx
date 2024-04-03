@@ -14,6 +14,8 @@ import { loginSuccess } from "./features/authSlice";
 import PrivateRoute from "./components/PrivateRoute";
 import ChangePassword from "./components/auth/ChangePassword";
 import Chat from "./components/chat/Chat";
+import HouseList from "./components/house/HouseList";
+import HouseFormEdit from "./components/house/HouseFormEdit";
 
 function App() {
 
@@ -29,6 +31,7 @@ function App() {
   return (
     <>      
       <BrowserRouter>
+      <div className="bg-gray-100">
         <Header />
         <Routes>
           {/* Rutas Privadas */}
@@ -37,12 +40,15 @@ function App() {
           <Route path="/user/:id" element={<PrivateRoute Component={UserFormEdit} />} />
           <Route path="/change-password" element={<PrivateRoute Component={ChangePassword} />} />
           <Route path="/chat" element={<PrivateRoute Component={Chat} />} />
+          <Route path="/house" element={<PrivateRoute Component={HouseList} />} />
+          <Route path="/house/:code" element={<PrivateRoute Component={HouseFormEdit} />} />
           {/* Rutas Publicas */}
           <Route path="/create-user" element={<UserFormCreate />} />
           <Route path="/create-house" element={<HouseFormCreate />} />
           <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
+        </div>
       </BrowserRouter>
     </>
   );

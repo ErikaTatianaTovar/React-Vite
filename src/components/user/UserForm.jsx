@@ -1,49 +1,62 @@
-/** Componente reutilizable para Crear y Actualizar un Usuario */
+import { useState } from "react";
+
 export default function UserForm({ props }) {
   const { handleSubmit, handleChangeAvatar, user } = props;
+  const [avatarPreview, setAvatarPreview] = useState(null);
+
+  const handleAvatarPreview = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
-    <div className="max-w-md w-full mx-auto px-5 py-5">
+    <div className="max-w-md w-full mx-auto mt-10 mb-10 bg-white">
       <form
         onSubmit={handleSubmit}
         className="shadow-md rounded pt-6 pb-10 mb-4 px-10"
       >
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Name</label>
+          <label className="block text-gray-700 font-bold mb-2">Nombre</label>
           <input
             type="text"
             required
             name="name"
             placeholder="Name"
             defaultValue={user?.name}
-            className="shadow appearance-none border rounded w-full focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Lastname</label>
+          <label className="block text-gray-700 font-bold mb-2">Apellido</label>
           <input
             type="text"
             required
             name="lastname"
             placeholder="Lastname"
             defaultValue={user?.lastname}
-            className="shadow appearance-none border rounded w-full focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Email</label>
+          <label className="block text-gray-700 font-bold mb-2">Correo</label>
           <input
             type="email"
             required
             name="email"
             placeholder="Email"
             defaultValue={user?.email}
-            className="shadow appearance-none border rounded w-full focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">
-            Identification
+            Identificación
           </label>
           <input
             type="number"
@@ -51,51 +64,64 @@ export default function UserForm({ props }) {
             name="id"
             placeholder="Identification"
             defaultValue={user?.id}
-            className="shadow appearance-none border rounded w-full focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         {user ? null : (
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">
-              Password
+              Contraseña
             </label>
             <input
               type="password"
               required
               name="password"
               placeholder="Password"
-              className="shadow appearance-none border rounded w-full focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
             />
           </div>
         )}
-        <div className="flex items-center justify-center w-full">
+        <div className="flex items-center justify-center w-full mb-4">
           <label
             htmlFor="avatar"
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
           >
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg
-                className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 16"
-              >
-                <path
+            {avatarPreview ? (
+              <img
+                src={avatarPreview}
+                alt="Avatar Preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div>
+                <svg
+                  className="w-8 h-8 mb-2 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
-                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                />
-              </svg>
-              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                <span className="font-semibold">Click to upload</span> or drag
-                and drop
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                SVG, PNG, JPG or GIF (MAX. 800x400px)
-              </p>
-            </div>
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+                <p className="mb-2 text-sm text-gray-500">
+                  <span className="font-semibold">Haga clic para cargar</span> o
+                  arrastrar y soltar
+                </p>
+                <p className="text-xs text-gray-500">
+                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                </p>
+              </div>
+            )}
             <input
-              onChange={handleChangeAvatar}
+              onChange={(e) => {
+                handleAvatarPreview(e);
+                handleChangeAvatar(e);
+              }}
               id="avatar"
               name="avatar"
               accept="image/png, image/jpeg"
@@ -104,9 +130,10 @@ export default function UserForm({ props }) {
             />
           </label>
         </div>
+
         <div className="flex justify-center">
           <button className="bg-blue-500 hover:bg-blue-700 rounded text-blue-50 font-bold py-2 px-4">
-            Save
+            Guardar
           </button>
         </div>
       </form>

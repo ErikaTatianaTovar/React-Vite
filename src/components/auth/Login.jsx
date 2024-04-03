@@ -38,11 +38,12 @@ export default function Login() {
       }
     } catch (error) {
       console.log(error.message);
+      console.log(error)
     }
   };
 
   return (
-    <div className="max-w-lg w-full mx-auto px-5 py-5">
+    <div className="max-w-md w-full mx-auto mt-10 mb-10 bg-white">
       {!error ? null : (
         <div className="flex justify-center bg-slate-100 text-red-500 font-bold">
           Datos Invalidos
@@ -54,7 +55,7 @@ export default function Login() {
       >
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-            Email
+            Correo
           </label>
           <input
             type="email"
@@ -72,7 +73,7 @@ export default function Login() {
             className="block text-gray-700 font-bold mb-2"
             htmlFor="password"
           >
-            Password
+            Contraseña
           </label>
           <input
             type="password"
