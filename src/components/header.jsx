@@ -41,6 +41,11 @@ export default function Header() {
                 Casas
               </Link>
             </li>
+            <li>
+        <Link to="/chat" className="hover:text-blue-500">
+            Chat
+          </Link>
+        </li>
           </>
         )}
         <li>
@@ -48,6 +53,7 @@ export default function Header() {
             Crear Usuario
           </Link>
         </li>
+        
         <li>
               <Link to="/create-house" className="hover:text-blue-500">
                 Crear Casa
