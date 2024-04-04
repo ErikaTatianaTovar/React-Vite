@@ -93,19 +93,19 @@ export default function Header() {
                     to={`/user/${user._id}`}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Profile
+                    Perfil
                   </Link>
                   <Link
                     to={`/change-password`}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Change Password
+                    Cambiar Contraseña
                   </Link>
                   <a
                     onClick={handleLogout}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   >
-                    Logout
+                    Salir
                   </a>
                 </div>
               )}

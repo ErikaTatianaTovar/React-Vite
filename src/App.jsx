@@ -15,7 +15,7 @@ import ChangePassword from "./components/auth/ChangePassword";
 import Chat from "./components/chat/Chat";
 import HouseList from "./components/house/HouseList";
 import HouseFormEdit from "./components/house/HouseFormEdit";
-import Header from "./components/header";
+import Header from "./components/Header";
 import Home from "./components/Home";
 
 function App() {

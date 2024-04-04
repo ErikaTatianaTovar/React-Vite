@@ -72,14 +72,14 @@ export default function ChangePassword() {
             className="block text-gray-700 font-bold mb-2"
             htmlFor="password"
           >
-            Current Password
+            Nueva Contraseña
           </label>
           <input
             type="password"
             required
             minLength="3"
             name="password"
-            placeholder="Password"
+            placeholder="••••••••"
             className="shadow appearance-none border rounded w-full focus:shadow-outline"
           />
           {isError ? (
@@ -93,14 +93,14 @@ export default function ChangePassword() {
             className="block text-gray-700 font-bold mb-2"
             htmlFor="new-password"
           >
-            New Password
+            Nueva Contraseña
           </label>
           <input
             type="password"
             required
             minLength="3"
             name="new-password"
-            placeholder="New Password"
+            placeholder="••••••••"
             className="shadow appearance-none border rounded w-full focus:shadow-outline"
             onChange={handleChangeNewPassword}
           />
@@ -110,14 +110,14 @@ export default function ChangePassword() {
             className="block text-gray-700 font-bold mb-2"
             htmlFor="repeat-newpassword"
           >
-            Repeat New Password
+            Confirmar Nueva Contraseña
           </label>
           <input
             type="password"
             required
             minLength="3"
             name="repeat-new-password"
-            placeholder="Repeat New Password"
+            placeholder="••••••••"
             className="shadow appearance-none border rounded w-full focus:shadow-outline"
             onChange={handleChangeRepeatNewPassword}
           />
@@ -130,7 +130,7 @@ export default function ChangePassword() {
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 rounded text-blue-50 font-bold py-2 px-4"
           >
-            Change Password
+            Cambiar Contraseña
           </button>
         </div>
       </form>
