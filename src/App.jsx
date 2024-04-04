@@ -1,8 +1,7 @@
-import Family from "./components/family";
+import Family from "./components/Family";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Footer from "./components/footer";
-import Header from "./components/header";
+import Footer from "./components/Footer";
 import UserList from "./components/user/UserList";
 import Login from "./components/auth/Login";
 import UserFormCreate from "./components/user/UserFormCreate";
@@ -16,6 +15,8 @@ import ChangePassword from "./components/auth/ChangePassword";
 import Chat from "./components/chat/Chat";
 import HouseList from "./components/house/HouseList";
 import HouseFormEdit from "./components/house/HouseFormEdit";
+import Header from "./components/header";
+import Home from "./components/Home";
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
         <Header />
         <Routes>
           {/* Rutas Privadas */}
-          <Route path="/" element={<PrivateRoute Component={Family} />} />
+          <Route path="/" element={<PrivateRoute Component={Home} />} />
           <Route path="/user" element={<PrivateRoute Component={UserList} />} />
           <Route path="/user/:id" element={<PrivateRoute Component={UserFormEdit} />} />
           <Route path="/change-password" element={<PrivateRoute Component={ChangePassword} />} />

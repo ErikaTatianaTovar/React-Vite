@@ -1,30 +1,55 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { useGetMessagesQuery } from "../../features/api/apiMessageSlice";
 import { useSelector } from "react-redux";
 
 export default function Chat() {
-  const { data: messages, isLoading, isError, error } = useGetMessagesQuery();
+
+  const { data, isLoading, isError, error } = useGetMessagesQuery();
   const user = useSelector((state) => state.auth.user);
+  const [messages, setMessage] = useState([])
 
-  const handleSubmit =(e) => {
-    e.preventDefault();
-    console.log(e.target.message.value);
-  }
-
-  useEffect(() => {
-    const soket = io("http://localhost:3000", {
+const socket = io("http://localhost:3000", {
       transports: ["websocket"],
     });
 
-    soket.on("connect", function () {
+    socket.on("connect", function () {
       console.log("connected");
     });
-  });
+
+  const handleSubmit =(e) => {
+    e.preventDefault();
+    const payload = {
+      "body": e.target.message.value,
+      "from": user._id,
+      "to": user._id
+  }
+  const data = JSON.stringify(payload);
+  socket.emit("message", data)
+  e.target.message.value = ""
+  }
+
+  socket.on("message-receipt", function (data) {
+    const newMessage = {
+      "_id":data._id,
+      "body": data.body,
+      "from": {_id: data.from},
+      "to": {_id: data.to},
+      "createdAt": data.createdAt
+    }
+    setMessage([...messages, newMessage])
+  })
+
+  useEffect(() => {
+    
+    if(data) {
+      setMessage(data)
+    }
+  }, [data]);
 
   if (isLoading)
     return (
-      <div role="status" className="flex justify-center">
+      <div role="status" className="flex justify-center items-center h-screen">
         <svg
           aria-hidden="true"
           className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -49,12 +74,12 @@ export default function Chat() {
   console.log(messages);
 
   return (
-    <div className="max-w-4xl w-full mx-auto px-5 py-5 h-screen">
-      <div className="bg-green-300 text-gray-800 p-4">
+    <div className="max-w-4xl w-full mx-auto mt-10 mb-10 bg-white shadow-md rounded-b-2xl rounded-t-2xl">
+      <div className="bg-green-300 text-gray-800 p-4 rounded-t-2xl">
         <h1 className="text-lg font-semibold">Chat</h1>
       </div>
       {/*seccion de mensajes*/}
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-2 px-7 py-7 max-h-[65vh] overflow-y-auto rounded-lg">
         {messages.map(message => (
           <div key={message._id}
             className={
@@ -68,20 +93,32 @@ export default function Chat() {
             </span>
           </div>
         ))}
-        <div className="g-pink-300 text-gray-700 py-2 px-4 rounded-lg max-w-xs self-end">
+        <div className="g-pink-300 text-gray-700 py-2 px-4 rounded-lg max-w-xs self-end rounded-lg">
           <p></p>
         </div>
       </div>
       <hr />
-      <form onSubmit={handleSubmit} className="bg-gray-300 text-blue-400 p-4">
+      <form onSubmit={handleSubmit} className="bg-gray-300 text-blue-400 p-4 flex items-center rounded-b-2xl">
         <input
           type="text"
           name="message"
-          className="w-full bg-gray-100 rounded-lg py-2 px-4"
+          className="w-full bg-gray-100 rounded-lg py-2 px-4 mr-2"
           placeholder="Escribir mensaje..."
         />
-        <button className="bg-red-800 mx-2 rounded-lg p-2 text-yellow-400">
-          Send
+        <button className="bg-green-500 rounded-lg p-2 text-white">
+        <svg
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+             d="M1.101,21.757L23.8,12.028L1.101,2.3l0.011,7.912l13.623,1.816L1.112,13.845 L1.101,21.757z"
+            />
+          </svg>
         </button>
       </form>
     </div>
