@@ -4,12 +4,14 @@ import {
   useGetUsersQuery,
 } from "../../features/api/apiUsersSlice";
 import Swal from "sweetalert2";
+import getApiBaseUrl from "../../features/api/api";
 
 export default function UserList() {
   /** Obtiene el estado de una variable con Redux */
   // const users = useSelector(state => state.users)
   const { data: users, isLoading, isError, error } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
+  const baseUrl = getApiBaseUrl();
   const handleDelete = (user) => {
     Swal.fire({
       title: `¿Estas seguro que deseas eliminar el Usuario ${user.name} ${user.lastname}?`,
@@ -33,7 +35,7 @@ export default function UserList() {
     );
   else if (isError) return <div>Error: {error.message} </div>;
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-5 py-8">
       <h1 className="text-2xl font-bold mb-4">Lista de Usuarios</h1>
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -78,7 +80,7 @@ export default function UserList() {
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <img
                       className="h-20 w-20 rounded-full"
-                      src={`http://localhost:3000/${user.avatar}`}
+                      src={`${baseUrl}/${user.avatar}`}
                       alt=""
                     />
                   </td>

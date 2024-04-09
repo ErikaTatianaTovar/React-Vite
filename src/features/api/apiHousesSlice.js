@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import getApiBaseUrl from "./api";
 
 
 export const apiHousesSlice= createApi({
     reducerPath: "housesApi",
     baseQuery: fetchBaseQuery({
-      baseUrl: "http://localhost:3000",
+      baseUrl: getApiBaseUrl(),
       prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
         if (token) {
@@ -15,16 +16,16 @@ export const apiHousesSlice= createApi({
     }),
     endpoints: (builder) => ({
         getHouses: builder.query({
-          query: () => "/house",
+          query: () => "/housing",
           providesTags: ["Houses"], // Me permite ejecutar un llamado
         }),
         getHouseByCode: builder.query({
-          query: (code) => "/house/" + code,
+          query: (code) => "/housing/" + code,
           providesTags: ["House"],
         }),
         createHouse: builder.mutation({
           query: (newHouse) => ({
-            url: "/house",
+            url: "/housing",
             method: "POST",
             body: newHouse,
           }),
@@ -32,7 +33,7 @@ export const apiHousesSlice= createApi({
         }),
         updateHouse: builder.mutation({
           query: (house) => ({
-            url: `/house/${house.code}`,
+            url: `/housing/${house.code}`,
             method: "PATCH",
             body: house,
           }),
@@ -40,14 +41,14 @@ export const apiHousesSlice= createApi({
         }),
         deleteHouse: builder.mutation({
           query: (code) => ({
-            url: `/house/${code}`,
+            url: `/housing/${code}`,
             method: "DELETE",
           }),
           invalidatesTags: ["Houses"],
         }),
-        uploadAvatarHouse: builder.mutation({
+        uploadImageHouse: builder.mutation({
           query: (body) => ({
-            url: `/upload/${body.code}/house`,
+            url: `/upload/${body.code}/housing`,
             method: "POST",
             body: body.file,
           }),
@@ -56,13 +57,11 @@ export const apiHousesSlice= createApi({
       }),
     });
     
-    /** Segun la nomenclatura de la libreria se usa use al principio
-     * y Query o Mutation al final segun corresponda */
     export const {
       useGetHousesQuery,
       useGetHouseByCodeQuery,
       useCreateHouseMutation,
       useUpdateHouseMutation,
       useDeleteHouseMutation,
-      useUploadAvatarHouseMutation,
+      useUploadImageHouseMutation,
     } = apiHousesSlice;

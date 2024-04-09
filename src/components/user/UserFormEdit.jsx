@@ -27,7 +27,7 @@ export default function UserFormEdit() {
       name: e.target.name.value,
       lastname: e.target.lastname.value,
       email: e.target.email.value,
-      id: e.target.id.value,
+      id: e.target.id.value
     };
     try {
       const response = await updateUser(user);

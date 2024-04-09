@@ -1,21 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useGetDepartmentsQuery,
   useLazyGetCitiesByDepartmentQuery,
 } from "../../features/api/apiColombiaSlice";
+import {
+  validateAddress,
+  validateBathrooms,
+  validateParking,
+  validatePrice,
+  validateRooms,
+  validateSize,
+  validateZipCode,
+} from "./FormValidations";
 
 export default function HouseForm({ props }) {
-  const { handleSubmit, handleChangeAvatar, house } = props;
   const {
     data: departments,
     isLoading,
     isError,
     error,
   } = useGetDepartmentsQuery();
+
+  const { handleChangeImage, house, propertyType, setPropertyType } = props;
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [cities, setCities] = useState([]);
-  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [getCities] = useLazyGetCitiesByDepartmentQuery();
+
+  useEffect(() => {
+    // Set the propertyType state when it changes in props
+    if (house && house.type) {
+      setPropertyType(house.type);
+    }
+  }, [house, setPropertyType]);
 
   const handleChangeDepartment = async (e) => {
     setCities([]);
@@ -26,14 +43,53 @@ export default function HouseForm({ props }) {
     }
   };
 
-  const handleAvatarPreview = (event) => {
+  const handleImagePreview = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatarPreview(reader.result);
+        setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const [errors, setErrors] = useState({
+    address: "",
+    zip_code: "",
+    price: "",
+    size: "",
+    rooms: "",
+    bathrooms: "",
+    parking: "",
+  });
+
+  const handlePropertyTypeChange = (e) => {
+    setPropertyType(e.target.value);
+  };
+
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    const newErrors = {
+      address: validateAddress(e.target.elements.address.value),
+      zip_code: validateZipCode(e.target.elements.zip_code.value),
+      price: validatePrice(e.target.elements.price.value),
+      size: validateSize(e.target.elements.size.value),
+      rooms: validateRooms(e.target.elements.rooms.value),
+      bathrooms: validateBathrooms(e.target.elements.bathrooms.value),
+      parking: validateParking(e.target.elements.parking.value),
+    };
+
+    setErrors(newErrors);
+
+    const noErrors = Object.values(newErrors).every((error) => error === '');
+    if (noErrors) {
+      if (props.handleSubmit) {
+        props.handleSubmit(e);
+      } else {
+        console.error('handleSubmit is not defined in props');
+      }
     }
   };
 
@@ -48,19 +104,60 @@ export default function HouseForm({ props }) {
   return (
     <div className="max-w-md w-full mx-auto mt-10 mb-10 bg-white">
       <form
-        onSubmit={handleSubmit}
-        className="shadow-md rounded pt-6 pb-10 mb-4 px-10"
+        onSubmit={handleSubmitForm}
+        className="shadow-md rounded pt-6 pb-10 mb-4 "
       >
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Tipo</label>
-          <input
-            type="text"
-            required
-            name="type"
-            placeholder="Apartamento"
-            defaultValue={house?.type}
-            className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-          />
+          <label className="block text-gray-700 font-bold mb-2">
+            Tipo de Propiedad
+          </label>
+          <div className="flex items-center">
+            <label className="mr-4">
+              <input
+                type="radio"
+                value="Casa"
+                checked={propertyType === "Casa"}
+                onChange={handlePropertyTypeChange}
+              />
+              <span className="ml-2">Casa</span>
+            </label>
+            <label className="mr-4">
+              <input
+                type="radio"
+                value="Apartamento"
+                checked={propertyType === "Apartamento"}
+                onChange={handlePropertyTypeChange}
+              />
+              <span className="ml-2">Apartamento</span>
+            </label>
+            <label className="mr-4">
+              <input
+                type="radio"
+                value="Finca"
+                checked={propertyType === "Finca"}
+                onChange={handlePropertyTypeChange}
+              />
+              <span className="ml-2">Finca</span>
+            </label>
+            <label className="mr-4">
+              <input
+                type="radio"
+                value="Oficina"
+                checked={propertyType === "Oficina"}
+                onChange={handlePropertyTypeChange}
+              />
+              <span className="ml-2">Oficina</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="Otro"
+                checked={propertyType === "Otro"}
+                onChange={handlePropertyTypeChange}
+              />
+              <span className="ml-2">Otro</span>
+            </label>
+          </div>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">
@@ -111,6 +208,9 @@ export default function HouseForm({ props }) {
             defaultValue={house?.address}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.address && (
+            <p className="text-red-500 text-xs mt-1">{errors.address}</p>
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Código Postal</label>
@@ -122,9 +222,12 @@ export default function HouseForm({ props }) {
             defaultValue={house?.zip_code}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.zip_code && (
+            <p className="text-red-500 text-xs mt-1">{errors.zip_code}</p>
+          )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Precio</label>
+          <label className="block text-gray-700 font-bold mb-2">Precio (sin puntos ni comas)</label>
           <input
             type="number"
             required
@@ -133,6 +236,9 @@ export default function HouseForm({ props }) {
             defaultValue={house?.price}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.price && (
+            <p className="text-red-500 text-xs mt-1">{errors.price}</p>
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Tamaño en M²</label>
@@ -144,9 +250,12 @@ export default function HouseForm({ props }) {
             defaultValue={house?.size}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.size && (
+            <p className="text-red-500 text-xs mt-1">{errors.size}</p>
+          )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Habitaciones</label>
+          <label className="block text-gray-700 font-bold mb-2">Cuartos</label>
           <input
             type="number"
             required
@@ -155,6 +264,9 @@ export default function HouseForm({ props }) {
             defaultValue={house?.rooms}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.rooms && (
+            <p className="text-red-500 text-xs mt-1">{errors.rooms}</p>
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Baños</label>
@@ -164,8 +276,12 @@ export default function HouseForm({ props }) {
             name="bathrooms"
             placeholder="1"
             defaultValue={house?.bathrooms}
-            className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+            className="shadow a
+            ppearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.bathrooms && (
+            <p className="text-red-500 text-xs mt-1">{errors.bathrooms}</p>
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Parqueadero</label>
@@ -177,16 +293,19 @@ export default function HouseForm({ props }) {
             defaultValue={house?.parking}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.parking && (
+            <p className="text-red-500 text-xs mt-1">{errors.parking}</p>
+          )}
         </div>
         <div className="flex items-center justify-center w-full mb-4">
           <label
-            htmlFor="avatar"
+            htmlFor="image"
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
           >
-            {avatarPreview ? (
+            {imagePreview ? (
               <img
-                src={avatarPreview}
-                alt="Avatar Preview"
+                src={imagePreview}
+                alt="Image Preview"
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -216,17 +335,18 @@ export default function HouseForm({ props }) {
             )}
             <input
               onChange={(e) => {
-                handleAvatarPreview(e);
-                handleChangeAvatar(e);
+                handleImagePreview(e);
+                handleChangeImage(e);
               }}
-              id="avatar"
-              name="avatar"
+              id="image"
+              name="image"
               accept="image/png, image/jpeg"
               type="file"
               className="hidden"
             />
           </label>
         </div>
+        {/* Botón de submit */}
         <div className="flex justify-center">
           <button className="bg-blue-500 hover:bg-blue-700 rounded text-blue-50 font-bold py-2 px-4">
             Guardar

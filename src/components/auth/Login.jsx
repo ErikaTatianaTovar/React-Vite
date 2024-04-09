@@ -19,7 +19,6 @@ export default function Login() {
         email: e.target.email.value,
         password: e.target.password.value,
       };
-      console.log(user);
       const response = await login(user);
       if (response.error && response.error.data.status == "error") {
         setError(true);
@@ -38,7 +37,6 @@ export default function Login() {
       }
     } catch (error) {
       console.log(error.message);
-      console.log(error)
     }
   };
 

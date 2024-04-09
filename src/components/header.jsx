@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import { useState, useEffect, useRef } from "react";
+import getApiBaseUrl from "../features/api/api";
 
 export default function Header() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -10,7 +11,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const baseUrl = getApiBaseUrl();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -80,7 +81,8 @@ export default function Header() {
           <>
             <div className="relative">
               <img
-                src={`http://localhost:3000/${user.avatar}`}
+
+                src={`${baseUrl}/${user.avatar}`}
                 className="rounded-full h-10 w-10 cursor-pointer"
                 onClick={toggleMenu}
               />

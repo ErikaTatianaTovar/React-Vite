@@ -55,7 +55,7 @@ export default function UserFormCreate() {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 

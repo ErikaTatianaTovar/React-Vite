@@ -14,7 +14,7 @@ const socket = io("http://localhost:3000", {
     });
 
     socket.on("connect", function () {
-      console.log("connected");
+     // console.log("connected");
     });
 
   const handleSubmit =(e) => {
@@ -70,8 +70,6 @@ const socket = io("http://localhost:3000", {
       </div>
     );
   else if (isError) return <div>Error: {error.message} </div>;
-
-  console.log(messages);
 
   return (
     <div className="max-w-4xl w-full mx-auto mt-10 mb-10 bg-white shadow-md rounded-b-2xl rounded-t-2xl">

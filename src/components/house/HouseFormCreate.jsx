@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
   useCreateHouseMutation,
-  useUploadAvatarHouseMutation,
+  useUploadImageHouseMutation,
 } from "../../features/api/apiHousesSlice";
 import Swal from "sweetalert2";
 import { useState } from "react";
@@ -12,16 +12,17 @@ export default function HouseFormCreate() {
   const [createHouse] = useCreateHouseMutation();
 
   const [file, setFile] = useState(null);
-  const [uploadAvatar] = useUploadAvatarHouseMutation();
+  const [uploadImage] = useUploadImageHouseMutation();
+  const [propertyType, setPropertyType] = useState(""); 
 
-  const handleChangeAvatar = (e) => {
+  const handleChangeImage = (e) => {
     setFile(e.target.files);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newHouse = {
-      type: e.target.type.value,
+      type: propertyType,
       department: e.target.department.value.split("-")[1],
       city: e.target.city.value,
       address: e.target.address.value,
@@ -30,9 +31,9 @@ export default function HouseFormCreate() {
       size: e.target.size.value,
       rooms: e.target.rooms.value,
       bathrooms: e.target.bathrooms.value,
-      parking: e.target.parking.value
+      parking: e.target.parking.value,
     };
-    console.log(newHouse)
+    console.log(newHouse);
     try {
       const response = await createHouse(newHouse);
       if (response.data.status == "error") {
@@ -48,7 +49,7 @@ export default function HouseFormCreate() {
         if (file) {
           const formData = new FormData();
           formData.append("file", file[0]);
-          uploadAvatar({ _id: response.data._id, file: formData });
+          uploadImage({ code: response.data.code, file: formData });
         }
         Swal.fire({
           position: "top-end",
@@ -69,8 +70,10 @@ export default function HouseFormCreate() {
     <HouseForm
       props={{
         handleSubmit: handleSubmit,
-        handleChangeAvatar: handleChangeAvatar,
+        handleChangeImage: handleChangeImage,
         house: null,
+        propertyType: propertyType,
+        setPropertyType: setPropertyType,
       }}
     />
   );
