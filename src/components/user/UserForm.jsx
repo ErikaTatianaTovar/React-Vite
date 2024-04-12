@@ -23,25 +23,25 @@ export default function UserForm({ props }) {
   const [errors, setErrors] = useState({
     name: "",
     lastname: "",
-    id: ""
+    id: "",
   });
- 
+
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const newErrors = {
       name: validateName(e.target.elements.name.value),
       lastname: validateLastName(e.target.elements.lastname.value),
-      id: validateIdentification(e.target.elements.id.value)
+      id: validateIdentification(e.target.elements.id.value),
     };
 
     setErrors(newErrors);
 
-    const noErrors = Object.values(newErrors).every((error) => error === '');
+    const noErrors = Object.values(newErrors).every((error) => error === "");
     if (noErrors) {
       if (props.handleSubmit) {
         props.handleSubmit(e);
       } else {
-        console.error('handleSubmit is not defined in props');
+        console.error("handleSubmit is not defined in props");
       }
     }
   };

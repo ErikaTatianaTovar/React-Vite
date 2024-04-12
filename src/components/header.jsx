@@ -76,12 +76,14 @@ export default function Header() {
         </li>
       </ul>
       {/* DropDown Usuario Logueado */}
-      <div className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 px-5" ref={dropdownRef}>
+      <div
+        className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 px-5"
+        ref={dropdownRef}
+      >
         {isAuthenticated ? (
           <>
             <div className="relative">
               <img
-
                 src={`${baseUrl}/${user.avatar}`}
                 className="rounded-full h-10 w-10 cursor-pointer"
                 onClick={toggleMenu}
@@ -114,8 +116,11 @@ export default function Header() {
             </div>
           </>
         ) : (
-          <Link to="/login" className="text-blue-500 hover:text-blue-700 font-semibold py-2 px-4 rounded-full bg-white shadow-md">
-           Login
+          <Link
+            to="/login"
+            className="text-blue-500 hover:text-blue-700 font-semibold py-2 px-4 rounded-full bg-white shadow-md"
+          >
+            Login
           </Link>
         )}
       </div>

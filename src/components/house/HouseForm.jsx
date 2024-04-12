@@ -68,7 +68,6 @@ export default function HouseForm({ props }) {
     setPropertyType(e.target.value);
   };
 
-
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const newErrors = {
@@ -83,12 +82,12 @@ export default function HouseForm({ props }) {
 
     setErrors(newErrors);
 
-    const noErrors = Object.values(newErrors).every((error) => error === '');
+    const noErrors = Object.values(newErrors).every((error) => error === "");
     if (noErrors) {
       if (props.handleSubmit) {
         props.handleSubmit(e);
       } else {
-        console.error('handleSubmit is not defined in props');
+        console.error("handleSubmit is not defined in props");
       }
     }
   };
@@ -199,7 +198,9 @@ export default function HouseForm({ props }) {
           </div>
         )}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Dirección</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Dirección
+          </label>
           <input
             type="text"
             required
@@ -213,7 +214,9 @@ export default function HouseForm({ props }) {
           )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Código Postal</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Código Postal
+          </label>
           <input
             type="number"
             required
@@ -227,7 +230,9 @@ export default function HouseForm({ props }) {
           )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Precio (sin puntos ni comas)</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Precio (sin puntos ni comas)
+          </label>
           <input
             type="number"
             required
@@ -241,7 +246,9 @@ export default function HouseForm({ props }) {
           )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Tamaño en M²</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Tamaño en M²
+          </label>
           <input
             type="number"
             required
@@ -284,7 +291,9 @@ export default function HouseForm({ props }) {
           )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Parqueadero</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Parqueadero
+          </label>
           <input
             type="number"
             required

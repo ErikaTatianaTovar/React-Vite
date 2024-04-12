@@ -13,7 +13,7 @@ export default function HouseFormCreate() {
 
   const [file, setFile] = useState(null);
   const [uploadImage] = useUploadImageHouseMutation();
-  const [propertyType, setPropertyType] = useState(""); 
+  const [propertyType, setPropertyType] = useState("");
 
   const handleChangeImage = (e) => {
     setFile(e.target.files);
@@ -33,7 +33,6 @@ export default function HouseFormCreate() {
       bathrooms: e.target.bathrooms.value,
       parking: e.target.parking.value,
     };
-    console.log(newHouse);
     try {
       const response = await createHouse(newHouse);
       if (response.data.status == "error") {
@@ -62,7 +61,7 @@ export default function HouseFormCreate() {
         });
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

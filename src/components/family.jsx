@@ -75,11 +75,11 @@ export function family() {
   };
 
   const mostrarTexto = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const keyUp = () => {
-    console.log("Tecla dejo de ser presionada");
+    // console.log("Tecla dejo de ser presionada");
   };
 
   const users = [

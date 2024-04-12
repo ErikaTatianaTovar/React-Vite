@@ -4,46 +4,44 @@ import { useGetMessagesQuery } from "../../features/api/apiMessageSlice";
 import { useSelector } from "react-redux";
 
 export default function Chat() {
-
   const { data, isLoading, isError, error } = useGetMessagesQuery();
   const user = useSelector((state) => state.auth.user);
-  const [messages, setMessage] = useState([])
+  const [messages, setMessage] = useState([]);
 
-const socket = io("http://localhost:3000", {
-      transports: ["websocket"],
-    });
+  const socket = io("http://localhost:3000", {
+    transports: ["websocket"],
+  });
 
-    socket.on("connect", function () {
-     // console.log("connected");
-    });
+  socket.on("connect", function () {
+    // console.log("connected");
+  });
 
-  const handleSubmit =(e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const payload = {
-      "body": e.target.message.value,
-      "from": user._id,
-      "to": user._id
-  }
-  const data = JSON.stringify(payload);
-  socket.emit("message", data)
-  e.target.message.value = ""
-  }
+      body: e.target.message.value,
+      from: user._id,
+      to: user._id,
+    };
+    const data = JSON.stringify(payload);
+    socket.emit("message", data);
+    e.target.message.value = "";
+  };
 
   socket.on("message-receipt", function (data) {
     const newMessage = {
-      "_id":data._id,
-      "body": data.body,
-      "from": {_id: data.from},
-      "to": {_id: data.to},
-      "createdAt": data.createdAt
-    }
-    setMessage([...messages, newMessage])
-  })
+      _id: data._id,
+      body: data.body,
+      from: { _id: data.from },
+      to: { _id: data.to },
+      createdAt: data.createdAt,
+    };
+    setMessage([...messages, newMessage]);
+  });
 
   useEffect(() => {
-    
-    if(data) {
-      setMessage(data)
+    if (data) {
+      setMessage(data);
     }
   }, [data]);
 
@@ -78,13 +76,16 @@ const socket = io("http://localhost:3000", {
       </div>
       {/*seccion de mensajes*/}
       <div className="flex flex-col space-y-2 px-7 py-7 max-h-[65vh] overflow-y-auto rounded-lg">
-        {messages.map(message => (
-          <div key={message._id}
-            className={
-                `${(message.from && user._id == message.from._id) ? 
-                    'bg-pink-300 self-end' : 
-                    'bg-blue-300 self-start'} 
-                     text-gray-700 py-2 px-4 rounded-lg max-w-xs`}>
+        {messages.map((message) => (
+          <div
+            key={message._id}
+            className={`${
+              message.from && user._id == message.from._id
+                ? "bg-pink-300 self-end"
+                : "bg-blue-300 self-start"
+            } 
+                     text-gray-700 py-2 px-4 rounded-lg max-w-xs`}
+          >
             <p>{message.body}</p>
             <span className="text-xs text-gray-100 self-end">
               {message.createdAt}
@@ -96,7 +97,10 @@ const socket = io("http://localhost:3000", {
         </div>
       </div>
       <hr />
-      <form onSubmit={handleSubmit} className="bg-gray-300 text-blue-400 p-4 flex items-center rounded-b-2xl">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray-300 text-blue-400 p-4 flex items-center rounded-b-2xl"
+      >
         <input
           type="text"
           name="message"
@@ -104,7 +108,7 @@ const socket = io("http://localhost:3000", {
           placeholder="Escribir mensaje..."
         />
         <button className="bg-green-500 rounded-lg p-2 text-white">
-        <svg
+          <svg
             className="w-6 h-6"
             fill="none"
             viewBox="0 0 24 24"
@@ -114,7 +118,7 @@ const socket = io("http://localhost:3000", {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
-             d="M1.101,21.757L23.8,12.028L1.101,2.3l0.011,7.912l13.623,1.816L1.112,13.845 L1.101,21.757z"
+              d="M1.101,21.757L23.8,12.028L1.101,2.3l0.011,7.912l13.623,1.816L1.112,13.845 L1.101,21.757z"
             />
           </svg>
         </button>
