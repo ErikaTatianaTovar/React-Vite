@@ -11,7 +11,7 @@ import {
   validateRooms,
   validateSize,
   validateZipCode,
-} from "./FormValidations";
+} from "./FormHouseValidations";
 
 export default function HouseForm({ props }) {
   const {

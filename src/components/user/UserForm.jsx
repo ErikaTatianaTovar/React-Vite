@@ -1,7 +1,12 @@
 import { useState } from "react";
+import {
+  validateIdentification,
+  validateLastName,
+  validateName,
+} from "./FormUserValidations";
 
 export default function UserForm({ props }) {
-  const { handleSubmit, handleChangeAvatar, user } = props;
+  const { handleChangeAvatar, user } = props;
   const [avatarPreview, setAvatarPreview] = useState(null);
 
   const handleAvatarPreview = (event) => {
@@ -15,10 +20,36 @@ export default function UserForm({ props }) {
     }
   };
 
+  const [errors, setErrors] = useState({
+    name: "",
+    lastname: "",
+    id: ""
+  });
+ 
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    const newErrors = {
+      name: validateName(e.target.elements.name.value),
+      lastname: validateLastName(e.target.elements.lastname.value),
+      id: validateIdentification(e.target.elements.id.value)
+    };
+
+    setErrors(newErrors);
+
+    const noErrors = Object.values(newErrors).every((error) => error === '');
+    if (noErrors) {
+      if (props.handleSubmit) {
+        props.handleSubmit(e);
+      } else {
+        console.error('handleSubmit is not defined in props');
+      }
+    }
+  };
+
   return (
     <div className="max-w-md w-full mx-auto mt-10 mb-10 bg-white">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitForm}
         className="shadow-md rounded pt-6 pb-10 mb-4 px-10"
       >
         <div className="mb-4">
@@ -31,6 +62,9 @@ export default function UserForm({ props }) {
             defaultValue={user?.name}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.name && (
+            <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Apellido</label>
@@ -42,6 +76,9 @@ export default function UserForm({ props }) {
             defaultValue={user?.lastname}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.lastname && (
+            <p className="text-red-500 text-xs mt-1">{errors.lastname}</p>
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Correo</label>
@@ -66,6 +103,9 @@ export default function UserForm({ props }) {
             defaultValue={user?.id}
             className="shadow appearance-none border rounded w-full focus:outline-none focus:border-blue-500 focus:ring-blue-500"
           />
+          {errors.id && (
+            <p className="text-red-500 text-xs mt-1">{errors.id}</p>
+          )}
         </div>
         {user ? null : (
           <div className="mb-4">

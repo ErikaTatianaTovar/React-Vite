@@ -1,5 +1,5 @@
 const getApiBaseUrl = () => {
-    return 'https://talento-tech.vercel.app';
+    return 'http://localhost:3000';
   };
   
   export default getApiBaseUrl;
