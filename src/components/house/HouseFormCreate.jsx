@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {
-  useCreateHouseMutation,
-  useUploadImageHouseMutation,
+  useCreateHouseMutation, useUploadImageMutation,
 } from "../../features/api/apiHousesSlice";
 import Swal from "sweetalert2";
 import { useState } from "react";
@@ -12,7 +11,7 @@ export default function HouseFormCreate() {
   const [createHouse] = useCreateHouseMutation();
 
   const [file, setFile] = useState(null);
-  const [uploadImage] = useUploadImageHouseMutation();
+  const [uploadImage] = useUploadImageMutation();
   const [propertyType, setPropertyType] = useState("");
 
   const handleChangeImage = (e) => {

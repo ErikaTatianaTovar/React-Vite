@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   useGetHouseByCodeQuery,
   useUpdateHouseMutation,
-  useUploadImageHouseMutation,
+  useUploadImageMutation,
 } from "../../features/api/apiHousesSlice";
 import HouseForm from "./HouseForm";
 
@@ -13,7 +13,7 @@ export default function HouseFormEdit() {
   const params = useParams(); // Instanciamos la variable para obtener los parametros por URL
   const [updateHouse] = useUpdateHouseMutation();
   const [file, setFile] = useState(null);
-  const [uploadHouseImage] = useUploadImageHouseMutation();
+  const [uploadImage] = useUploadImageMutation();
 
   const [propertyType, setPropertyType] = useState("");
 
@@ -36,12 +36,13 @@ export default function HouseFormEdit() {
       bathrooms: e.target.bathrooms.value,
       parking: e.target.parking.value,
     };
+    console.log(house);
     try {
       const response = await updateHouse(house);
       if (file) {
         const formData = new FormData();
         formData.append("file", file[0]);
-        uploadHouseImage({ code: params.code, file: formData });
+        uploadImage({ code: params.code, file: formData });
       }
       if (response.data.status == "error") {
         Swal.fire({
@@ -82,6 +83,7 @@ export default function HouseFormEdit() {
     isError,
     error,
   } = useGetHouseByCodeQuery(params.code);
+
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">

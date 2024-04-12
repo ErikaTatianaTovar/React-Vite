@@ -45,7 +45,7 @@ export const apiHousesSlice = createApi({
       }),
       invalidatesTags: ["Houses"],
     }),
-    uploadImageHouse: builder.mutation({
+    uploadImage: builder.mutation({
       query: (body) => ({
         url: `/upload/${body.code}/housing`,
         method: "POST",
@@ -62,5 +62,5 @@ export const {
   useCreateHouseMutation,
   useUpdateHouseMutation,
   useDeleteHouseMutation,
-  useUploadImageHouseMutation,
+  useUploadImageMutation,
 } = apiHousesSlice;
