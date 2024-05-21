@@ -13,15 +13,17 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setError(false);
+
       const user = {
         email: e.target.email.value,
         password: e.target.password.value,
       };
       const response = await login(user);
-      if (response.error && response.error.data.status == "error") {
-        setError(true);
+      if (response.error) {
+        setError(response.error);
       } else {
         localStorage.setItem("sessionData", JSON.stringify(response.data));
         dispatch(loginSuccess(response.data));
@@ -31,8 +33,9 @@ export default function Login() {
           title: "Bienvenido",
           showConfirmButton: false,
           timer: 1500,
-        }).then(() => {
-          navigate("/user"); // Hacemos la redireccion
+        })
+        .then(() => {
+          navigate("/user");
         });
       }
     } catch (error) {
@@ -48,6 +51,7 @@ export default function Login() {
         </div>
       )}
       <form
+        action=""
         onSubmit={handleSubmit}
         className=" shadow-md rounded pt-6 pb-10 mb-4 px-10"
       >
